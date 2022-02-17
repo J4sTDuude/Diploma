@@ -17,7 +17,7 @@ app.use(cors())
 app.use('/posts', postRoutes)
 
 app.get('/', (req, res) => {
-    res.send('Hello to comicses API')
+    res.send('Hello to comicses API FHF')
 })
 
 const PORT = process.env.PORT || 5000
