@@ -4,7 +4,7 @@ import { AppBar, Avatar, Button, Toolbar, Typography} from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 import useStyles from './styles.js'
 import logo from '../../images/logo.png'
-
+import decode from 'jwt-decode'
 
 const Navbar = () => {
    const classes = useStyles()
@@ -23,12 +23,17 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        const token = user?.token
-
-
-        setUser(JSON.parse(localStorage.getItem('profile')))
-    }, [location])
-
+        const token = user?.token;
+    
+        if (token) {
+          const decodedToken = decode(token);
+    
+          if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+        }
+    
+        setUser(JSON.parse(localStorage.getItem('profile')));
+      }, [location]);
+    
     return (
         <AppBar className={classes.appBar} position='static' color='inherit'>
         <div className={classes.brandContainer}>
